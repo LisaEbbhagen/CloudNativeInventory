@@ -1,6 +1,13 @@
 @CloudNativeInventory.Api_HostAddress = http://localhost:5210
 
-GET {{CloudNativeInventory.Api_HostAddress}}/weatherforecast/
+GET {{CloudNativeInventory.Api_HostAddress}}/
 Accept: application/json
 
 ###
+
+
+GET http://localhost:5210/api/inventory
+
+###
+
+GET http://localhost:5210/api/system/verify-integration
