@@ -363,4 +363,14 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # appsettings
+appsettings.json
 appsettings.*.json
+
+# others 
+.env
+.env.*
+secrets.json
+
+# VS Code
+.vscode/
+!.vscode/extensions.json
