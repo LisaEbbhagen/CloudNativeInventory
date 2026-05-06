@@ -1,0 +1,22 @@
+# Standard .NET ignore
+**/bin/
+**/obj/
+**/.vs/
+**/.vscode/
+
+# Git och Docker
+.git/
+.gitignore
+Dockerfile*
+.dockerignore
+
+# Secrets och miljö (Viktigt för uppgiften!)
+**/.env
+**/appsettings.Development.json
+**/secrets.json
+
+# Dokumentation och användarfiler
+README.md
+LICENSE
+**/*.user
+**/*.suo
