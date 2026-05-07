@@ -52,4 +52,4 @@ jobs:
           imageToDeploy: ${{ secrets.ACR_LOGIN_SERVER }}/inventory-api:${{ github.sha }}
           containerAppName: ca-inventory-api-dev
           resourceGroup: rg-LisaE-dev
-          containerAppEnvironment: cae-inventory-north
+          containerAppEnvironment: cae-inventory-dev-lisa
