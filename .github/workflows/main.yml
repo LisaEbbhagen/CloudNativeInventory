@@ -1,0 +1,55 @@
+name: CI/CD Inventory API
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  # part 1, testing
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+      - name: Run Tests
+        run: dotnet test --configuration Release
+
+  # part 2, build and push (to Germany)
+  build-and-push:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to ACR
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.ACR_LOGIN_SERVER }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Build and push image
+        run: |
+          docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/inventory-api:${{ github.sha }} .
+          docker push ${{ secrets.ACR_LOGIN_SERVER }}/inventory-api:${{ github.sha }}
+
+  # Part 3, deploy (to Poland)
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Container App
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          imageToDeploy: ${{ secrets.ACR_LOGIN_SERVER }}/inventory-api:${{ github.sha }}
+          containerAppName: ca-inventory-api-dev
+          resourceGroup: rg-LisaE-dev
+          containerAppEnvironment: cae-inventory-dev-lisa
