@@ -2,7 +2,7 @@ name: CI/CD Inventory API
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 jobs:
   # part 1, testing
