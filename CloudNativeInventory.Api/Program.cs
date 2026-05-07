@@ -42,4 +42,5 @@ using (var scope = app.Services.CreateScope())
         db.SaveChanges();
     }
 }
+
 app.Run();
