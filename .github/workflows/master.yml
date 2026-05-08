@@ -14,8 +14,11 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
-      - name: Run Tests
-        run: dotnet test --configuration Release
+      - name: Restore, Build and Tests
+        run: |
+          dotnet restore
+          dotnet build --no-restore
+          dotnet test --no-build --configuration Release
 
   # part 2, build and push (to Germany)
   build-and-push:
@@ -30,11 +33,14 @@ jobs:
           login-server: ${{ secrets.ACR_LOGIN_SERVER }}
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
-
+          
       - name: Build and push image
         run: |
-          docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/inventory-api:${{ github.sha }} -f CloudNativeInventory.Api/Dockerfile .
+          docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/inventory-api:${{ github.sha }} \
+                       -t ${{ secrets.ACR_LOGIN_SERVER }}/inventory-api:latest \
+                       -f CloudNativeInventory.Api/Dockerfile .
           docker push ${{ secrets.ACR_LOGIN_SERVER }}/inventory-api:${{ github.sha }}
+          docker push ${{ secrets.ACR_LOGIN_SERVER }}/inventory-api:latest
 
   # Part 3, deploy (to Poland)
   deploy:
