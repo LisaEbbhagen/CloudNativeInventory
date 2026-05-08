@@ -13,7 +13,7 @@ public class InventoryControllerTests
 {
     private DbContextOptions<InventoryDbContext> CreateNewContextOptions()
     {
-        // Skapar en unik in-memory databas för varje test
+        // Creates a unique in-memory database for each test
         return new DbContextOptionsBuilder<InventoryDbContext>()
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
             .Options;

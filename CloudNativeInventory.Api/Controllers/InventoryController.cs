@@ -24,7 +24,7 @@ public class InventoryController : ControllerBase
         return await _context.Products.ToListAsync();
     }
 
-    // Denna endpoint används för att bevisa att appen framgångsrikt har hämtat den hemliga integrationsnyckeln (från Azure Key Vault i prod)
+    // This endpoint is used to prove that the app has successfully retrieved the secret integration key (from Azure Key Vault in production)
     [HttpGet("system/verify-integration")]
     public IActionResult VerifyExternalIntegration()
     {
@@ -32,9 +32,9 @@ public class InventoryController : ControllerBase
 
         if (string.IsNullOrEmpty(apiKey) || apiKey == "LOCAL_DEV_SECRET_12345_DO_NOT_DEPLOY")
         {
-            return StatusCode(500, new { Status = "Unsecured", Message = "Körs med lokal (eller saknad) hemlighet!" });
+            return StatusCode(500, new { Status = "Unsecured", Message = "Running with local (or missing) secret!" });
         }
 
-        return Ok(new { Status = "Secured", Message = "Hemlighet laddades framgångsrikt via säker konfiguration." });
+        return Ok(new { Status = "Secured", Message = "Secret successfully loaded via secure configuration." });
     }
 }
