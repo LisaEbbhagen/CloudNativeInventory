@@ -18,7 +18,7 @@ jobs:
         run: |
           dotnet restore
           dotnet build --no-restore
-          dotnet test --no-build --configuration Release
+          dotnet test CloudNativeInventory.Tests/CloudNativeInventory.Tests.csproj --configuration Release --no-build
 
   # part 2, build and push (to Germany)
   build-and-push:
