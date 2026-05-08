@@ -4,4 +4,4 @@ GET http://localhost:5210/api/inventory
 
 ###
 
-GET http://localhost:5210/api/system/verify-integration
+GET http://localhost:5210/api/inventory/system/verify-integration
