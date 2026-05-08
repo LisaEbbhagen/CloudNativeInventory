@@ -33,7 +33,7 @@ jobs:
 
       - name: Build and push image
         run: |
-          docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/inventory-api:${{ github.sha }} .
+          docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/inventory-api:${{ github.sha }} -f CloudNativeInventory.Api/Dockerfile .
           docker push ${{ secrets.ACR_LOGIN_SERVER }}/inventory-api:${{ github.sha }}
 
   # Part 3, deploy (to Poland)
