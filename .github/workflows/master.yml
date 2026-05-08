@@ -14,11 +14,15 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
-      - name: Restore, Build and Tests
-        run: |
-          dotnet restore
-          dotnet build --no-restore
-          dotnet test CloudNativeInventory.Tests/CloudNativeInventory.Tests.csproj --configuration Release --no-build
+          
+      - name: Restore
+        run: dotnet restore
+        
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+        
+      - name: Run tests
+        run: dotnet test --no-build --configuration Release --verbosity normal
 
   # part 2, build and push (to Germany)
   build-and-push:
