@@ -17,7 +17,7 @@ jobs:
         with:
           dotnet-version: '9.0.x'
           cache: true
-          cache-dependency-path: '**/*.csproj'
+          cache-dependency-path: 'CloudNativeInventory.Api/*.csproj'
           
       - name: Restore
         run: dotnet restore
