@@ -53,11 +53,12 @@ Triggers on push and pull-request into master branch. Branch protection demands 
 
 
 ## Architecture Decision Record (ADR) 
-Motivation for the following decisions can be found in [XXXXXXX]
-* Hosting: Azure Container Apps (ACA)
-* Security: Rootless Container
+Motivation for the following decisions can be found in [[0001-infrastructure-and-security.md](./CloudNativeInventory.Api/Docs/adr/001-infrastructure-and-security.md)]
+* Compute Platform: Azure Container Apps (ACA)
 * Secrets: Azure Key Vault and Managed Identity
-* Build process: Multi-stage Dockerfile
+* Identity: Managed Identity
+* Container Security: Rootless and Multi-stage
+* Pipeline Design: Github Actions with caching
 
 ## Verify Production
 When the app is deployed, security configuration can be verified at the following endpoint: 
