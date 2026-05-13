@@ -6,6 +6,7 @@ A robust inventory API built with .NET 9, Docker and Azure. The goal of this pro
 * Azure Key Vault
 * Azure Container Registry
 * Azure Container Apps
+* Azure Application Insights
 * DevOps
 * CI/CD workflows
 
@@ -65,5 +66,21 @@ When the app is deployed, security configuration can be verified at the followin
 [https://ca-inventory-api-dev.delightfulpebble-2fdba7cd.polandcentral.azurecontainerapps.io/api/inventory/system/verify-integration]
 * Expected result: `200 OK` with status `"Secured"` 
 This confirms that the aplication has successfully authenticated using Managed Identity and replaced local configuration with the real secret from Azure Key Vault. 
+
+## Monitoring & trobleshooting 
+To maintain control over the application´s health in Azure, I utilize three primary tools and strategies: 
+1. **Log Stream**
+   When the application fails to start or crashes immediatly, we can use the Log Stream. This acts as a live feed of the application´s console output. It it the first place to look that verifies that the app is succesfully connecting       to Azure Key Vault and starting up without authentication errors.
+2. **Application Insights**
+   In the Azure Portal we can track three key metrics to ensure everything is running smoothly:
+   * Failed Requests: Shows if users are encountering errors
+   * Server Response Time: Monitors if the API is slow, which is particularly useful for observing *cold starts* caused by the Container apps scale-to-zero behavior.
+   * Dependency Duration: Tracks the time it takes for the application to communicate with Azure Key Vault.
+3. **Logs**
+   If an issue occured in the past and needs to be investigated to find the cause we can use Log Analytics. Whith this tool we can search though historical data. A useful query to find recent errors is:
+   `ContainerAppConsoleLogs_CL 
+   | where Log_s contains "Error"
+   | order by TimeGenerated desc`
+
 
    
