@@ -20,6 +20,8 @@ builder.Configuration.AddAzureKeyVault(keyVaultUrl, new DefaultAzureCredential()
 builder.Services.AddDbContext<InventoryDbContext>(options =>
     options.UseInMemoryDatabase("InventoryDb"));
 
+builder.Services.AddApplicationInsightsTelemetry(); 
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
