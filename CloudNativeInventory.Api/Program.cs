@@ -12,16 +12,16 @@ builder.Services.AddOpenApi(); // .NET 9 OpenAPI
 // Use Managed Identity to fetch secrets in production.
 if (builder.Environment.IsProduction())
  {
-     var keyVaultUrl = new Uri(builder.Configuration["KeyVaultUrl"]!);
-builder.Configuration.AddAzureKeyVault(keyVaultUrl, new DefaultAzureCredential());
- }
+    var keyVaultUrl = new Uri(builder.Configuration["KeyVaultUrl"]!);
+    builder.Configuration.AddAzureKeyVault(keyVaultUrl, new DefaultAzureCredential());
+    builder.Services.AddApplicationInsightsTelemetry();
+}
 
 // Usage of InMemory database locally
 builder.Services.AddDbContext<InventoryDbContext>(options =>
     options.UseInMemoryDatabase("InventoryDb"));
 
-builder.Services.AddApplicationInsightsTelemetry(); 
-
+ 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
